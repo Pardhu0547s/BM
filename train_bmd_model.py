@@ -7,10 +7,12 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 import joblib
 import os
+import json
 
 def main():
     # 1. Load Data
-    data_path = 'UA.csv'
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(script_dir, 'UA.csv')
     print(f"Loading data from {data_path}...")
     df = pd.read_csv(data_path)
 
@@ -79,7 +81,33 @@ def main():
     print("Saving the best model and scaler...")
     joblib.dump(best_model, 'bmd_model.pkl')
     joblib.dump(scaler, 'scaler.pkl')
-    print("Saved to bmd_model.pkl and scaler.pkl successfully.")
+
+    # 7. Save Evaluation Results for Dashboard
+    print("Saving evaluation results for dashboard...")
+    best_metrics = {
+        'best_model_name': best_name,
+        'r2_score': best_r2,
+        'rmse': np.sqrt(mean_squared_error(y_test, best_model.predict(X_test_scaled)))
+    }
+    with open('metrics.json', 'w') as f:
+        json.dump(best_metrics, f)
+
+    # Save actual vs predicted for plotting
+    y_pred_best = best_model.predict(X_test_scaled)
+    results_df = pd.DataFrame({
+        'Actual': y_test,
+        'Predicted': y_pred_best
+    })
+    results_df.to_csv('test_results.csv', index=False)
+
+    # Save feature importance if available (Random Forest / Gradient Boosting)
+    if hasattr(best_model, 'feature_importances_'):
+        importances = dict(zip(X.columns, best_model.feature_importances_.tolist()))
+        with open('feature_importances.json', 'w') as f:
+            json.dump(importances, f)
+            
+    print("Saved evaluation data to metrics.json, test_results.csv, and feature_importances.json.")
+    print("All files saved successfully.")
 
 if __name__ == "__main__":
     main()
