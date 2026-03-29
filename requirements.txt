@@ -1,8 +1,21 @@
-pandas
-numpy
-scikit-learn
-joblib
-streamlit
-plotly
-matplotlib
-statsmodels
+# BMD Prediction Pipeline — Dependencies
+# Install: pip install -r requirements.txt
+
+# Core ML
+scikit-learn==1.4.2
+pandas==2.2.1
+numpy==1.26.4
+joblib==1.3.2
+
+# Explainability
+shap==0.45.1
+
+# Dashboard
+streamlit==1.31.1
+plotly==5.19.0
+
+# Plotting (for SHAP waterfall)
+matplotlib==3.8.3
+
+# Stats (for OLS trendline in plotly)
+statsmodels==0.14.1
