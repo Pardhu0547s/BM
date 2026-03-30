@@ -11,7 +11,7 @@ import os
 # Paths
 # ---------------------------------------------------------------------------
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_PATH = os.path.join(PROJECT_ROOT, "UA.csv")
+DATA_PATH = os.path.join(PROJECT_ROOT, "BMD_FEMALE.csv")
 ARTIFACTS_DIR = os.path.join(PROJECT_ROOT, "artifacts")
 PIPELINE_PATH = os.path.join(ARTIFACTS_DIR, "bmd_pipeline.pkl")
 METRICS_PATH = os.path.join(ARTIFACTS_DIR, "metrics.json")
@@ -50,7 +50,6 @@ NUMERIC_FEATURES = [
 
 # Binary / categorical features (0/1 flags)
 BINARY_FEATURES = [
-    "Gender",
     # Medications
     "Calsium", "Calcitriol", "Bisphosphonate", "Calcitonin",
     # Comorbidities

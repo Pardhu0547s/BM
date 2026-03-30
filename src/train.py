@@ -163,11 +163,15 @@ def train(fast: bool = False) -> None:
         explainer = shap.TreeExplainer(gb_model)
         shap_values = explainer.shap_values(X_test_transformed)
 
+        exp_val = explainer.expected_value
+        if hasattr(exp_val, "__len__") and not isinstance(exp_val, str):
+            exp_val = exp_val[0]
+
         shap_data = {
             "shap_values": shap_values,
             "X_test_transformed": X_test_transformed,
             "feature_names": transformed_feature_names,
-            "expected_value": float(explainer.expected_value),
+            "expected_value": float(exp_val),
         }
         joblib.dump(shap_data, SHAP_VALUES_PATH)
         print("    → SHAP values saved.")
