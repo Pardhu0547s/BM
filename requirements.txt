@@ -19,3 +19,8 @@ matplotlib==3.8.3
 
 # Stats (for OLS trendline in plotly)
 statsmodels==0.14.1
+
+# Backend (React API)
+fastapi==0.110.0
+uvicorn==0.27.1
+pydantic==2.6.4
